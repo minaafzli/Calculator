@@ -4,9 +4,13 @@
 }
 
 * {
-  font-family: "League Spartan";
+  font-family: "League Spartan", sans-serif;
   font-weight: 700;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
+
 :root {
   --bg-color: hsl(0, 0%, 90%);
   --screen-bg: hsl(0, 0%, 93%);
@@ -23,6 +27,7 @@
   --key--shadow: hsl(35, 11%, 61%);
   --result: hsl(60, 10%, 19%);
 }
+
 body.dark {
   --bg-color: hsl(222, 26%, 31%);
   --screen-bg: hsl(224, 36%, 15%);
@@ -31,39 +36,49 @@ body.dark {
   --theme-circle: hsl(225, 21%, 49%);
   --key-reset: hsl(6, 63%, 50%);
   --key-reset-shadow: hsl(6, 70%, 34%);
-  --key-shadow: hsl(224, 28%, 35%);
+  --key-shadow: hsl(28, 16%, 65%);
   --key-equal: hsl(225, 21%, 49%);
   --key-equal-shadow: hsl(224, 28%, 35%);
   --key-equal-hover: hsl(224, 30%, 34%);
   --key-bg: hsl(30, 25%, 89%);
   --result: hsl(0, 0%, 100%);
 }
+
 body {
   background-color: var(--bg-color);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0;
+  padding: 10px;
   font-family: sans-serif;
+  overflow-y: hidden;
 }
 
 .top-row {
   display: flex;
   padding-bottom: 10px;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   gap: 10px;
 }
+
 h4 {
   color: var(--change-them-txt);
+  margin: 0;
+  font-size: 0.9rem;
 }
+
 /* The switch - the box around the slider */
 .toggle-theme {
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  width: 50px;
+  height: 26px;
+  border: none;
+  outline: none;
+  background: transparent;
 }
 
 /* Hide default HTML checkbox */
@@ -71,6 +86,8 @@ h4 {
   opacity: 0;
   width: 0;
   height: 0;
+  outline: none;
+  border: none;
 }
 
 /* The slider */
@@ -81,37 +98,42 @@ h4 {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: hsl(0, 5%, 81%);
-  -webkit-transition: 0.4s;
+  background-color: var(--calc-bg);
   transition: 0.4s;
+  /* border: none; */
+  outline: none;
 }
 
 .slider:before {
   position: absolute;
   content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
   background-color: var(--theme-circle);
-  -webkit-transition: 0.4s;
   transition: 0.4s;
 }
 
-/* input:checked + .slider {
-  background-color: hsl(0, 0%, 8%);
-} */
-
-/* input:focus + .slider {
-  box-shadow: 0 0 1px #2196f3;
-} */
-
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+  transform: translateX(24px);
 }
 
+input:focus {
+  outline: none;
+}
+
+.switch:focus {
+  outline: none;
+}
+
+.toggle-theme:focus {
+  outline: none;
+  box-shadow: none;
+}
+.checkbox {
+  opacity: 0;
+}
 /* Rounded sliders */
 .slider.round {
   border-radius: 34px;
@@ -123,109 +145,512 @@ input:checked + .slider:before {
 
 .calculator {
   background: var(--calc-bg);
-  padding: 20px;
-  border-radius: 16px;
+  padding: 15px;
+  border-radius: 10px;
   box-shadow: 0 4px rgba(0, 0, 0, 0.2);
-  width: 300px;
+  width: 750px;
+  /* height: 650px; */
+  transition: all 0.3s ease;
 }
 
 .display {
   background: var(--screen-bg);
-  /* border: 2px solid #92a5b5; */
   padding: 15px;
-  font-size: 24px;
-  text-align: right;
   border-radius: 8px;
   margin-bottom: 20px;
-  min-height: 40px;
-  box-shadow: 2px 1px#3e586c;
+  box-shadow: 0 2px #3e586c;
+  min-height: 75px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
 }
 
 .buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 8px;
 }
 
 button {
-  padding: 15px;
-  font-size: 18px;
+  padding: 0;
+  font-size: 1rem;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   background: var(--key-bg);
   color: hsl(60, 10%, 19%);
   cursor: pointer;
-  transition: background 0.3s;
-  box-shadow: 2px 1px var(--key-shadow);
+  transition: background 0.3s, transform 0.1s;
+  box-shadow: 0 3px var(--key-shadow);
+  height: 40px;
 }
 
 button:hover {
   background: white;
 }
 
+button:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px var(--key-shadow);
+}
+
 .clear {
   grid-column: span 4;
   background: var(--key-reset);
-  box-shadow: 2px 1px var(--key-reset-shadow);
+  box-shadow: 0 3px var(--key-reset-shadow);
   width: 50%;
 }
 
 .clear:hover {
   background: hsl(25, 99%, 27%);
 }
+
+.clear:active {
+  box-shadow: 0 1px var(--key-reset-shadow);
+}
+
 .bottom-row {
   display: flex;
   gap: 10px;
   grid-column: span 4;
   margin-top: 10px;
 }
+
 .del {
   background-color: var(--key-equal);
-  box-shadow: 2px 1px var(--key-equal-shadow);
+  box-shadow: 0 3px var(--key-equal-shadow);
+  flex: 1;
 }
+
 .equal {
   background-color: var(--key-equal);
-  box-shadow: 2px 1px var(--key-equal-shadow);
-  width: 50%;
+  box-shadow: 0 3px var(--key-equal-shadow);
+  flex: 1;
 }
+
 .equal:hover,
 .del:hover {
   background-color: var(--key-equal-hover);
 }
+
+.equal:active,
+.del:active {
+  box-shadow: 0 1px var(--key-equal-shadow);
+}
+
 .big_buttons {
   display: flex;
-  width: 300px;
+  width: 100%;
   justify-content: space-between;
   padding-top: 15px;
   gap: 10px;
 }
+
 .display-area {
   text-align: right;
-  margin-bottom: 10px;
-  padding: 0 10px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
 }
 
 #expression {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #666;
-}
-
-#result {
-  font-size: 2rem;
-  font-weight: bold;
-  color: var(--result);
-}
-.display-area {
-  font-size: 2rem;
-  max-width: 100%;
+  margin-bottom: 5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  min-height: 15px;
+  height: 15px;
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.display-area #expression,
-.display-area #result {
-  font-size: min(3rem, 4vw);
+#result {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--result);
+  word-break: break-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  min-height: 30px;
   overflow: hidden;
-  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Media Query responsive*/
+/*  موبایل کوچک*/
+@media (max-width: 479px) {
+  .calculator {
+    max-width: 330px;
+    padding: 15px;
+  }
+
+  .display {
+    padding: 15px;
+    min-height: 80px;
+  }
+
+  .buttons {
+    gap: 10px;
+  }
+
+  button {
+    height: 45px;
+    font-size: 1.1rem;
+  }
+
+  h4 {
+    font-size: 1rem;
+  }
+
+  #expression {
+    font-size: 1.1rem;
+    min-height: 20px;
+    height: 20px;
+  }
+
+  #result {
+    font-size: 1.8rem;
+    min-height: 30px;
+  }
+}
+
+/* Media Query موبایل بزرگ*/
+@media (min-width: 480px) {
+  .calculator {
+    max-width: 330px;
+    padding: 15px;
+  }
+
+  .display {
+    padding: 18px;
+    min-height: 90px;
+  }
+
+  .buttons {
+    gap: 12px;
+  }
+
+  button {
+    height: 50px;
+    font-size: 1.2rem;
+  }
+
+  .toggle-theme {
+    width: 55px;
+    height: 30px;
+    background: transparent;
+  }
+
+  .slider:before {
+    height: 22px;
+    width: 22px;
+  }
+
+  h4 {
+    font-size: 1.1rem;
+  }
+
+  #expression {
+    font-size: 1.2rem;
+    min-height: 20px;
+    height: 20px;
+  }
+
+  #result {
+    font-size: 2rem;
+    min-height: 35px;
+  }
+
+  .bottom-row,
+  .big_buttons {
+    gap: 12px;
+  }
+}
+/* بین تبلت و موبایل*/
+@media (min-width: 576px) {
+  .calculator {
+    max-width: 340px;
+    padding: 20px;
+  }
+
+  .display {
+    padding: 15px;
+    min-height: 80px;
+  }
+
+  .buttons {
+    gap: 10px;
+  }
+
+  button {
+    height: 45px;
+    font-size: 1.1rem;
+  }
+
+  h4 {
+    font-size: 1rem;
+  }
+
+  #expression {
+    font-size: 1.1rem;
+    min-height: 20px;
+    height: 20px;
+  }
+
+  #result {
+    font-size: 1.8rem;
+    min-height: 30px;
+  }
+}
+
+/* Media Query برای تبلت‌ها */
+@media (min-width: 768px) {
+  .calculator {
+    max-width: 550px;
+    padding: 25px;
+  }
+
+  .display {
+    padding: 18px;
+    min-height: 90px;
+  }
+
+  .buttons {
+    gap: 12px;
+  }
+
+  button {
+    height: 50px;
+    font-size: 1.2rem;
+  }
+
+  .toggle-theme {
+    width: 55px;
+    height: 30px;
+    background: transparent;
+  }
+
+  .slider:before {
+    height: 22px;
+    width: 22px;
+  }
+
+  h4 {
+    font-size: 1.1rem;
+  }
+
+  #expression {
+    font-size: 1.2rem;
+    min-height: 20px;
+    height: 20px;
+  }
+
+  #result {
+    font-size: 2rem;
+    min-height: 35px;
+  }
+
+  .bottom-row,
+  .big_buttons {
+    gap: 12px;
+  }
+}
+
+/* Media Query برای تبلت‌ها */
+@media (min-width: 768px) {
+  .calculator {
+    max-width: 550px;
+    padding: 25px;
+  }
+
+  .display {
+    padding: 18px;
+    min-height: 90px;
+  }
+
+  .buttons {
+    gap: 12px;
+  }
+
+  button {
+    height: 50px;
+    font-size: 1.2rem;
+  }
+
+  .toggle-theme {
+    width: 55px;
+    height: 30px;
+    background: transparent;
+  }
+
+  .slider:before {
+    height: 22px;
+    width: 22px;
+  }
+
+  h4 {
+    font-size: 1.1rem;
+  }
+
+  #expression {
+    font-size: 1.2rem;
+    min-height: 20px;
+    height: 20px;
+  }
+
+  #result {
+    font-size: 2rem;
+    min-height: 35px;
+  }
+
+  .bottom-row,
+  .big_buttons {
+    gap: 12px;
+  }
+}
+
+/* Media Query برای لپ‌تاپ‌ها */
+@media (min-width: 992px) {
+  .calculator {
+    max-width: 500px;
+    height: 500px;
+    padding: 20px;
+  }
+
+  .display {
+    padding: 20px;
+    min-height: 95px;
+  }
+
+  .buttons {
+    gap: 10px;
+  }
+
+  button {
+    height: 45px;
+    font-size: 1.3rem;
+  }
+
+  h4 {
+    font-size: 1.2rem;
+  }
+
+  #expression {
+    font-size: 1.3rem;
+    min-height: 25px;
+    height: 25px;
+  }
+
+  #result {
+    font-size: 2.2rem;
+    min-height: 40px;
+  }
+}
+
+/* Media Query برای دسکتاپ بزرگ - 1440px */
+@media (min-width: 1200px) {
+  .calculator {
+    max-width: 600px;
+
+    padding: 20px;
+  }
+
+  .display {
+    padding: 20px;
+    min-height: 100px;
+  }
+
+  .buttons {
+    gap: 11px;
+  }
+
+  button {
+    font-size: 1.4rem;
+  }
+
+  .toggle-theme {
+    width: 60px;
+    height: 34px;
+    border: none;
+    outline: none;
+    background: transparent;
+  }
+
+  .slider:before {
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(26px);
+  }
+
+  h4 {
+    font-size: 1.3rem;
+  }
+
+  #expression {
+    font-size: 1.3rem;
+    min-height: 25px;
+    height: 25px;
+  }
+
+  #result {
+    font-size: 2.3rem;
+    min-height: 40px;
+  }
+
+  .bottom-row,
+  .big_buttons {
+    gap: 15px;
+  }
+}
+
+/* Media Query برای دسکتاپ خیلی بزرگ */
+@media (min-width: 1440px) {
+  .calculator {
+    max-width: 750px;
+    height: 650px;
+    padding: 20px;
+  }
+
+  .display {
+    padding: 22px;
+    min-height: 110px;
+  }
+
+  .buttons {
+    gap: 15px;
+  }
+
+  button {
+    height: 65px;
+    font-size: 1.5rem;
+  }
+
+  h4 {
+    font-size: 1.4rem;
+  }
+
+  #expression {
+    font-size: 1.4rem;
+    min-height: 30px;
+    height: 30px;
+  }
+
+  #result {
+    font-size: 2.5rem;
+    min-height: 45px;
+  }
+
+  .bottom-row,
+  .big_buttons {
+    gap: 18px;
+  }
 }
