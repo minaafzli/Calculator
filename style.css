@@ -225,7 +225,7 @@ button:hover {
 
 .display-area #expression,
 .display-area #result {
-  font-size: min(3rem, 4vw); /* فونت پویا برای جلوگیری از خروج متن */
+  font-size: min(3rem, 4vw);
   overflow: hidden;
   white-space: nowrap;
 }
